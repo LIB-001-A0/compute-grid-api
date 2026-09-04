@@ -5,7 +5,7 @@
   "countries": [
     {
       "code": "USA",
-      "capacity_gw": 64,
+      "capacity_gw": 63,
       "state": "OPERATING_ESTIMATE",
       "capacity_basis": "MIXED",
       "ai_focus": "MIXED"
