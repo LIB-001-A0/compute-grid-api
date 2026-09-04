@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>COMPUTE GRID</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0a0a;
+      color: #f5f5f5;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    .sub {
+      color: #aaa;
+      margin-bottom: 36px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 22px;
+      background: #111;
+    }
+
+    .country {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .capacity {
+      font-size: 38px;
+      margin: 10px 0;
+    }
+
+    .meta {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .note {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      color: #888;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>COMPUTE GRID / 2026.09</h1>
+    <div class="sub">USA · CHN · KOR Data Center Capacity</div>
+
+    <div id="grid" class="grid">
+      loading...
+    </div>
+
+    <div class="note">
+      CAPACITY BASIS ≠ IDENTICAL
+    </div>
+  </div>
+
+  <script>
+    fetch('./grid.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('grid');
+        container.innerHTML = '';
+
+        data.countries.forEach(country => {
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          let capacityText = country.capacity_gw + ' GW';
+
+          if (country.range_gw) {
+            capacityText += ' (' +
+              country.range_gw[0] +
+              '–' +
+              country.range_gw[1] +
+              ' GW range)';
+          }
+
+          card.innerHTML = `
+            <div class="country">${country.code}</div>
+            <div class="capacity">${capacityText}</div>
+            <div class="meta">
+              STATE: ${country.state}<br>
+              BASIS: ${country.capacity_basis}<br>
+              AI FOCUS: ${country.ai_focus}
+            </div>
+          `;
+
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        document.getElementById('grid').textContent =
+          'Failed to load grid.json';
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
