@@ -1,29 +1,44 @@
 {
   "project": "COMPUTE GRID",
+  "version": "2026.09",
   "updated_at": "2026-09-04",
+  "headline": "미국 64 · 중국 30±5 · 한국 0.7GW",
+  "dek": "AI 스케일링의 실물을 전력·데이터센터·가속기·냉각의 상태값으로 추적합니다.",
   "capacity_basis_note": "CAPACITY BASIS ≠ IDENTICAL",
   "countries": [
     {
       "code": "USA",
-      "capacity_gw": 63,
+      "name_ko": "미국",
+      "capacity_gw": 64,
       "state": "OPERATING_ESTIMATE",
       "capacity_basis": "MIXED",
-      "ai_focus": "MIXED"
+      "ai_focus": "MIXED",
+      "confidence": "MEDIUM",
+      "note": "전체 데이터센터 계산계 추정치. AI 전용 용량과 동일하지 않음."
     },
     {
       "code": "CHN",
+      "name_ko": "중국",
       "capacity_gw": 30,
-      "range_gw": [25, 35],
+      "range_gw": [
+        25,
+        35
+      ],
       "state": "OPERATING_ESTIMATE",
       "capacity_basis": "MIXED_SOURCES",
-      "ai_focus": "MIXED"
+      "ai_focus": "MIXED",
+      "confidence": "RANGE",
+      "note": "랙·연산성능·전력 통계를 정규화한 범위 추정."
     },
     {
       "code": "KOR",
+      "name_ko": "한국",
       "capacity_gw": 0.7,
       "state": "OPERATING_ESTIMATE",
       "capacity_basis": "MIXED",
-      "ai_focus": "MIXED"
+      "ai_focus": "MIXED",
+      "confidence": "MEDIUM",
+      "note": "주요 운영 데이터센터를 합산한 기준값."
     }
   ],
   "operators": [
@@ -49,5 +64,16 @@
     "UNDER_CONSTRUCTION",
     "EQUIPMENT_INSTALL",
     "OPERATING"
+  ],
+  "physical_path": [
+    "POWER",
+    "TRANSMISSION",
+    "TRANSFORMER",
+    "POWER_CONVERSION",
+    "COMPUTE_CORE",
+    "HBM",
+    "HEAT",
+    "COOLING",
+    "NEXT_STATE"
   ]
 }

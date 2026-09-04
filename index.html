@@ -1,124 +1,123 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>COMPUTE GRID</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0a0a0a;
-      color: #f5f5f5;
-    }
-
-    .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 24px;
-    }
-
-    h1 {
-      font-size: 42px;
-      margin-bottom: 8px;
-    }
-
-    .sub {
-      color: #aaa;
-      margin-bottom: 36px;
-    }
-
-    .grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .card {
-      border: 1px solid #333;
-      border-radius: 14px;
-      padding: 22px;
-      background: #111;
-    }
-
-    .country {
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    .capacity {
-      font-size: 38px;
-      margin: 10px 0;
-    }
-
-    .meta {
-      color: #aaa;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .note {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid #333;
-      color: #888;
-      font-size: 13px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>COMPUTE GRID / 2026.09</title>
+<style>
+:root{
+  --bg:#07090d;--panel:#0f131a;--line:#252c37;--text:#f3f6fb;--muted:#9aa5b4;
+  --soft:#151a23;--accent:#d7e0ec;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:
+  radial-gradient(circle at 70% -10%,rgba(120,145,190,.13),transparent 34%),
+  linear-gradient(#080a0f,#07090d 70%);
+  color:var(--text);font-family:Arial,"Noto Sans KR",sans-serif;
+}
+.wrap{max-width:1080px;margin:auto;padding:54px 24px 80px}
+.kicker{font:700 12px/1.4 monospace;letter-spacing:.15em;color:#9eabbc}
+h1{font-size:clamp(38px,6vw,76px);line-height:.98;margin:12px 0 18px;letter-spacing:-.05em}
+.lead{max-width:780px;color:#c1c8d2;font-size:18px;line-height:1.65;margin-bottom:38px}
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:linear-gradient(180deg,#11161e,#0c1016);border:1px solid var(--line);border-radius:18px;padding:24px}
+.code{font:700 13px/1 monospace;color:#aab5c4;letter-spacing:.08em}
+.value{font-size:clamp(42px,6vw,70px);font-weight:800;letter-spacing:-.045em;margin:14px 0 9px}
+.range{font-size:14px;color:#aab3bf}
+.bar-track{height:8px;background:#222934;border-radius:99px;overflow:hidden;margin:20px 0 16px}
+.bar{height:100%;background:linear-gradient(90deg,#f1f4f8,#8e9caf);border-radius:99px}
+.meta{font:12px/1.7 monospace;color:#939ead}
+.note{color:#8993a1;font-size:13px;line-height:1.6;margin-top:12px}
+.section{margin-top:56px}
+.section h2{font-size:28px;letter-spacing:-.035em;margin:0 0 18px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
+.stateflow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.state{font:700 11px/1 monospace;padding:10px 12px;border:1px solid #303846;border-radius:999px;background:#121722}
+.arrow{color:#687383}
+.skt{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
+.big{font-size:38px;font-weight:800}
+.label{color:#9ca7b5;font:12px/1.6 monospace}
+.x{font-size:28px;font-weight:800}
+.physical{display:grid;grid-template-columns:repeat(9,1fr);gap:7px}
+.physical div{min-height:86px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;border:1px solid #2a313c;border-radius:12px;background:#10151c;font:700 11px/1.4 monospace}
+.warning{margin-top:20px;padding:16px 18px;border-left:3px solid #bfc9d7;background:#0e131a;color:#c1c9d3;font-size:14px;line-height:1.7}
+.footer{margin-top:64px;padding-top:22px;border-top:1px solid #202732;display:flex;justify-content:space-between;gap:20px;color:#7e8997;font:12px/1.5 monospace}
+@media(max-width:760px){
+  .hero-grid{grid-template-columns:1fr}
+  .skt{grid-template-columns:1fr}
+  .physical{grid-template-columns:repeat(3,1fr)}
+}
+</style>
 </head>
-
 <body>
-  <div class="wrap">
-    <h1>COMPUTE GRID / 2026.09</h1>
-    <div class="sub">USA · CHN · KOR Data Center Capacity</div>
+<main class="wrap">
+  <div class="kicker">COMPUTE GRID / 2026.09</div>
+  <h1>미국 64 · 중국 30±5 · 한국 0.7GW</h1>
+  <div class="lead">100GW라는 미래 숫자보다 먼저, 지금 땅 위에 존재하는 계산계를 센다. 전력·데이터센터·가속기·냉각이 실제로 연결된 상태를 같은 화면에 올린다.</div>
 
-    <div id="grid" class="grid">
-      loading...
+  <section id="cards" class="hero-grid" aria-live="polite"></section>
+
+  <section class="section">
+    <h2>GW에도 상태가 있다</h2>
+    <div class="panel">
+      <div id="states" class="stateflow"></div>
+      <div class="warning">발표된 1GW, 계통접속을 확보한 1GW, 장비가 설치된 1GW, 실제 워크로드가 돌아가는 1GW는 서로 다른 물리적 실체다.</div>
     </div>
+  </section>
 
-    <div class="note">
-      CAPACITY BASIS ≠ IDENTICAL
-    </div>
-  </div>
+  <section class="section">
+    <h2>SKT 150MW → 5GW</h2>
+    <div class="panel skt" id="skt"></div>
+  </section>
 
-  <script>
-       fetch('./grid.json?v=' + Date.now())
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById('grid');
-        container.innerHTML = '';
+  <section class="section">
+    <h2>실리콘 밖까지 이어지는 계산 경로</h2>
+    <div class="physical" id="physical"></div>
+    <div class="warning">GPU만 세면 컴퓨터의 절반이 지워진다. 발전·송전·변압·전력변환·HBM·냉각·네트워크가 함께 증설돼야 스케일링이 지속된다.</div>
+  </section>
 
-        data.countries.forEach(country => {
-          const card = document.createElement('div');
-          card.className = 'card';
+  <footer class="footer">
+    <span>CAPACITY BASIS ≠ IDENTICAL</span>
+    <span>DATA: grid.json · UPDATED 2026-09-04</span>
+  </footer>
+</main>
 
-          let capacityText = country.capacity_gw + ' GW';
+<script>
+(async()=>{
+  const res = await fetch('./grid.json?v=' + Date.now(), {cache:'no-store'});
+  const data = await res.json();
+  const max = Math.max(...data.countries.map(d=>d.capacity_gw));
 
-          if (country.range_gw) {
-            capacityText += ' (' +
-              country.range_gw[0] +
-              '–' +
-              country.range_gw[1] +
-              ' GW range)';
-          }
+  document.getElementById('cards').innerHTML = data.countries.map(c=>{
+    const w = Math.max((c.capacity_gw/max)*100, 1.2);
+    const range = c.range_gw ? `<div class="range">RANGE ${c.range_gw[0]}–${c.range_gw[1]} GW</div>` : `<div class="range">&nbsp;</div>`;
+    return `<article class="card">
+      <div class="code">${c.code} · ${c.name_ko}</div>
+      <div class="value">${c.capacity_gw} <span style="font-size:.45em">GW</span></div>
+      ${range}
+      <div class="bar-track"><div class="bar" style="width:${w}%"></div></div>
+      <div class="meta">STATE: ${c.state}<br>BASIS: ${c.capacity_basis}<br>CONFIDENCE: ${c.confidence}</div>
+      <div class="note">${c.note}</div>
+    </article>`;
+  }).join('');
 
-          card.innerHTML = `
-            <div class="country">${country.code}</div>
-            <div class="capacity">${capacityText}</div>
-            <div class="meta">
-              STATE: ${country.state}<br>
-              BASIS: ${country.capacity_basis}<br>
-              AI FOCUS: ${country.ai_focus}
-            </div>
-          `;
+  document.getElementById('states').innerHTML =
+    data.states.map((s,i)=>`<span class="state">${s}</span>${i<data.states.length-1?'<span class="arrow">→</span>':''}`).join('');
 
-          container.appendChild(card);
-        });
-      })
-      .catch(error => {
-        document.getElementById('grid').textContent =
-          'Failed to load grid.json';
-        console.error(error);
-      });
-  </script>
+  const skt = data.operators.find(x=>x.name==='SKT');
+  document.getElementById('skt').innerHTML = `
+    <div><div class="label">NOW / ${skt.current.state}</div><div class="big">${skt.current.capacity_mw} MW</div></div>
+    <div class="x">×${skt.distance_x}</div>
+    <div><div class="label">2030 / ${skt.target_2030.state}</div><div class="big">${(skt.target_2030.capacity_mw/1000).toFixed(0)} GW</div></div>`;
+
+  document.getElementById('physical').innerHTML =
+    data.physical_path.map(x=>`<div>${x.replaceAll('_','<br>')}</div>`).join('');
+})().catch(err=>{
+  document.getElementById('cards').innerHTML='<div class="panel">grid.json을 불러오지 못했습니다.</div>';
+  console.error(err);
+});
+</script>
 </body>
 </html>
