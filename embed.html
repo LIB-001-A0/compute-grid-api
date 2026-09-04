@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COMPUTE GRID Embed</title>
+<style>
+:root{
+  --bg:#0a0d12;--panel:#11161e;--line:#28303b;--text:#f4f7fb;--muted:#9ca7b5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:transparent}
+body{font-family:Arial,"Noto Sans KR",sans-serif;color:var(--text)}
+.wrap{
+  width:100%;
+  background:linear-gradient(180deg,#0b0f15,#090c11);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:22px;
+  overflow:hidden;
+}
+.top{
+  display:flex;justify-content:space-between;gap:18px;align-items:flex-start;
+  margin-bottom:18px
+}
+.kicker{font:700 11px/1.4 monospace;letter-spacing:.16em;color:#9ba8b9}
+h1{margin:6px 0 0;font-size:clamp(24px,4vw,42px);line-height:1.08;letter-spacing:-.045em}
+.note{font-size:12px;color:#8390a0;text-align:right;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{background:#10151c;border:1px solid #242c37;border-radius:13px;padding:16px}
+.code{font:700 11px/1 monospace;color:#9eabba;letter-spacing:.08em}
+.value{font-size:clamp(30px,5vw,50px);font-weight:800;letter-spacing:-.04em;margin:10px 0 4px}
+.range{font-size:11px;color:#a5afbc;min-height:16px}
+.track{height:7px;background:#222a35;border-radius:99px;overflow:hidden;margin:14px 0 10px}
+.bar{height:100%;background:#e7edf5;border-radius:99px}
+.meta{font:10px/1.5 monospace;color:#8e99a8}
+.bottom{
+  margin-top:14px;padding-top:13px;border-top:1px solid #222a34;
+  display:flex;justify-content:space-between;gap:12px;align-items:center
+}
+.state{font:700 10px/1.5 monospace;color:#a9b4c3}
+.cta{
+  text-decoration:none;color:#fff;background:#1a2230;border:1px solid #334052;
+  padding:9px 12px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap
+}
+@media(max-width:650px){
+  .top{display:block}
+  .note{text-align:left;margin-top:8px}
+  .cards{grid-template-columns:1fr}
+  .bottom{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="kicker">COMPUTE GRID / 2026.09</div>
+      <h1>미국 64 · 중국 30±5 · 한국 0.7GW</h1>
+    </div>
+    <div class="note">CAPACITY BASIS ≠ IDENTICAL<br>STATE / BASIS / CONFIDENCE 표시</div>
+  </div>
+
+  <div id="cards" class="cards"></div>
+
+  <div class="bottom">
+    <div class="state">GW에도 상태가 있다 · ANNOUNCED → GRID_SECURED → OPERATING</div>
+    <a class="cta" href="./" target="_blank" rel="noopener">COMPUTE GRID 전체 보기 →</a>
+  </div>
+</div>
+
+<script>
+(async()=>{
+  const res = await fetch('./grid.json?v=' + Date.now(), {cache:'no-store'});
+  const data = await res.json();
+  const max = Math.max(...data.countries.map(d=>d.capacity_gw));
+  document.getElementById('cards').innerHTML = data.countries.map(c=>{
+    const w = Math.max((c.capacity_gw/max)*100, 1.2);
+    const range = c.range_gw ? `RANGE ${c.range_gw[0]}–${c.range_gw[1]} GW` : '&nbsp;';
+    return `<div class="card">
+      <div class="code">${c.code} · ${c.name_ko}</div>
+      <div class="value">${c.capacity_gw}<span style="font-size:.42em"> GW</span></div>
+      <div class="range">${range}</div>
+      <div class="track"><div class="bar" style="width:${w}%"></div></div>
+      <div class="meta">STATE: ${c.state}<br>BASIS: ${c.capacity_basis}<br>CONFIDENCE: ${c.confidence}</div>
+    </div>`;
+  }).join('');
+})().catch(()=>{
+  document.getElementById('cards').innerHTML = '<div style="color:#fff">데이터를 불러오지 못했습니다.</div>';
+});
+</script>
+</body>
+</html>
