@@ -81,7 +81,7 @@
   </div>
 
   <script>
-    fetch('./grid.json')
+       fetch('./grid.json?v=' + Date.now())
       .then(response => response.json())
       .then(data => {
         const container = document.getElementById('grid');
