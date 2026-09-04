@@ -1,0 +1,53 @@
+{
+  "project": "COMPUTE GRID",
+  "updated_at": "2026-09-04",
+  "capacity_basis_note": "CAPACITY BASIS ≠ IDENTICAL",
+  "countries": [
+    {
+      "code": "USA",
+      "capacity_gw": 64,
+      "state": "OPERATING_ESTIMATE",
+      "capacity_basis": "MIXED",
+      "ai_focus": "MIXED"
+    },
+    {
+      "code": "CHN",
+      "capacity_gw": 30,
+      "range_gw": [25, 35],
+      "state": "OPERATING_ESTIMATE",
+      "capacity_basis": "MIXED_SOURCES",
+      "ai_focus": "MIXED"
+    },
+    {
+      "code": "KOR",
+      "capacity_gw": 0.7,
+      "state": "OPERATING_ESTIMATE",
+      "capacity_basis": "MIXED",
+      "ai_focus": "MIXED"
+    }
+  ],
+  "operators": [
+    {
+      "name": "SKT",
+      "country": "KOR",
+      "current": {
+        "capacity_mw": 150,
+        "state": "OPERATING"
+      },
+      "target_2030": {
+        "capacity_mw": 5000,
+        "state": "ANNOUNCED"
+      },
+      "distance_x": 33.3
+    }
+  ],
+  "states": [
+    "ANNOUNCED",
+    "SITE_SECURED",
+    "GRID_SECURED",
+    "POWER_AVAILABLE",
+    "UNDER_CONSTRUCTION",
+    "EQUIPMENT_INSTALL",
+    "OPERATING"
+  ]
+}
